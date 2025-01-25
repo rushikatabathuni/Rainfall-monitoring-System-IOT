@@ -114,6 +114,7 @@ class RainfallSensor:
         :return: Cumulative rainfall in millimeters
         """
         try:
+            print("By https://github.com/rushikatabathuni/")
             list_data = self._read_register(self.I2C_REG_CUMULATIVE_RAINFALL, 4)
             rainfall = list_data[0] | (list_data[1] << 8) | (list_data[2] << 16) | (list_data[3] << 24)
             return rainfall / 10000.0
@@ -127,6 +128,7 @@ class RainfallSensor:
         :param hour: Specified time (valid range is 1-24 hours)
         :return: Cumulative rainfall in millimeters
         """
+        print("By https://github.com/rushikatabathuni/")
         if hour > 24:
             return 0.0
         
@@ -142,12 +144,14 @@ class RainfallSensor:
             return 0.0
 
     def get_raw_data(self):
+        
         """
         Get raw tipping bucket count
         
         :return: Number of tip counts
         """
         try:
+            print("By https://github.com/rushikatabathuni/")
             list_data = self._read_register(self.I2C_REG_RAW_DATA, 4)
             return list_data[0] | (list_data[1] << 8) | (list_data[2] << 16) | (list_data[3] << 24)
         except:
@@ -161,6 +165,7 @@ class RainfallSensor:
         :return: Boolean indicating success
         """
         try:
+            print("By https://github.com/rushikatabathuni/")
             data = int(value * 10000)
             return self._write_register(self.I2C_REG_RAW_BASE_RAINFALL, 
                                         [data & 0xFF, (data >> 8) & 0xFF])
@@ -407,7 +412,7 @@ def web_page():
 <body>
     <div class="header">
         <div class="title-section">
-            <h1>Water Monitoring System</h1>
+            <h1>Water Monitoring System by <a href="<a>https://github.com/rushikatabathuni/</a>" target="_blank">Rushi</a></h1>
             <p class="subtitle">Real-time rainfall and water flow analytics</p>
         </div>
         <button class="reset-button" onclick="resetReadings()">Reset Readings</button>
@@ -460,6 +465,7 @@ def web_page():
                 <span id="workingTime">0</span>
                 <span class="metric-unit">hrs</span>
             </div>
+            <a href="<a>https://github.com/rushikatabathuni/</a>" target="_blank">Rushi</a>
         </div>
     </div>
 
@@ -484,6 +490,7 @@ def web_page():
             <canvas id="flowRateCanvas"></canvas>
         </div>
     </div>
+    <a href="<a>https://github.com/rushikatabathuni/</a>" target="_blank">Rushi</a>
 
     <script>
         // Define constant max values for each chart type
@@ -702,64 +709,6 @@ def start_webserver(data_logger):
 
 
 def main():
-    global flow_sensor_enabled, prev, total_volume, flow_rate
-    data_logger = DataLogger()
-    
-    import _thread
-    _thread.start_new_thread(start_webserver, (data_logger,))
-    
-    sensor = DFRobot_RainfallSensor(i2c)
-    if not sensor.begin():
-        print("Sensor initialization failed!")
-        return
-        
-    print("Sensor initialized successfully!")
-    print("Connect to WiFi network 'RainfallMonitor' with password 'rainfall123'")
-    print("Then visit http://192.168.4.1 in your web browser")
-    
-    timer = Timer(0)
-    prev = 0
-    reading_count = 0  # To keep track of the number of readings
-    total_volume = 0  # Initialize total volume
-    flow_rate = 0     # Initialize flow rate
-
-    while True:
-        # Get the current rainfall and calculate the difference from the previous reading
-        current_rainfall = sensor.get_rainfall_in_time(1) - prev 
-        
-        if current_rainfall != prev:
-            # Reset reading count and calculate average rainfall based on current reading
-            reading_count = 1
-            average_rainfall = current_rainfall
-        else:
-            # Continue calculating average rainfall based on accumulated readings
-            reading_count += 1
-            average_rainfall = current_rainfall / reading_count  # Calculate average rainfall
-        
-        # Print current and average rainfall values
-        print("Rain: {:.2f}".format(average_rainfall))  # Print average rainfall
-        print("hour: {:.2f}".format(current_rainfall))  # Print current rainfall
-        
-        # Control flow sensor based on rainfall detection
-        if current_rainfall > 0:
-            flow_sensor_enabled = True
-            timer.init(period=1000, mode=Timer.PERIODIC, callback=calculate_flow_rate)
-        else:
-            flow_sensor_enabled = False
-            timer.deinit()
-
-        # Save the readings after the logic is executed
-        data_logger.save_reading(average_rainfall, current_rainfall, total_volume, flow_rate)
-        
-        # Reset variables to avoid accumulation
-        prev = current_rainfall
-        total_volume = 0  # Reset total volume after each cycle
-        flow_rate = 0     # Reset flow rate after each cycle
-        
-        # Sleep for 10 seconds before the next iteration
-        time.sleep(10)
-
-def main():
     print("Initializing Rainfall Sensor...")
     sensor = RainfallSensor()
     print(sensor.begin())
@@ -770,7 +719,7 @@ def main():
     _thread.start_new_thread(start_webserver, (data_logger,))
     
     
-    
+    print("By https://github.com/rushikatabathuni/")
     print(f"Firmware Version: {sensor.get_firmware_version()}")
     print("Sensor initialized successfully!")
     print("Connect to WiFi network 'RainfallMonitor' with password 'rainfall123'")
@@ -789,6 +738,7 @@ def main():
         print(f"Total Cumulative Rainfall: {cumulative} mm")
         print(f"Rainfall in Last 1 Hour(s): {sensor.get_rainfall_time(1)} mm")
         print(f"Raw Tipping Bucket Count: {tips} tips")
+        print("By https://github.com/rushikatabathuni/")
         if curr_rain !=prev:
             flow_sensor_enabled = True
             timer.init(period=1000, mode=Timer.PERIODIC, callback=calculate_flow_rate)
