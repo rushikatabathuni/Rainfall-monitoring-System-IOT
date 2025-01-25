@@ -136,7 +136,7 @@ The system processes raw sensor data to compute:
 
 
 ## Design
-![Design](images/design.png)
+![Design](images/Design.png)
 
 
 ##Block Diagram
