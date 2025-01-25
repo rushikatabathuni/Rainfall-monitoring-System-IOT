@@ -136,12 +136,13 @@ The system processes raw sensor data to compute:
 
 
 ## Design
--[images/design.png]
+![Design]("images/design.png")
+
 
 ##Block Diagram
 
-![images/Block-Diagram.png]
+!("images/Block-Diagram.png")
 
 ##Schematic Diagram
 
-![images/Schematic-Diagram.png]
+!("images/Schematic-Diagram.png")
